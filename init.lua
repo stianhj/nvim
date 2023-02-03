@@ -21,6 +21,8 @@ set autowrite
 set notermguicolors
 set t_Co=256
 set signcolumn=yes
+
+command! RemoveTrailingWhitespace :%s/\s\+$//
 ]])
 
 vim.opt.inccommand = "nosplit"
