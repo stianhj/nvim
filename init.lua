@@ -48,6 +48,12 @@ require("packer").startup(function()
   use "nvim-telescope/telescope.nvim"
 
   use "jacoborus/tender.vim"
+
+  use "https://git.sr.ht/~sircmpwn/hare.vim"
+
+  use "ruanyl/vim-gh-line"
+
+  use "leafOfTree/vim-vue-plugin"
 end)
 
 vim.cmd("color tender")
@@ -108,6 +114,10 @@ require"lspconfig".gopls.setup{
 }
 
 require"lspconfig".perlpls.setup{
+  on_attach = on_attach,
+}
+
+require'lspconfig'.vuels.setup{
   on_attach = on_attach,
 }
 
