@@ -47,7 +47,7 @@ require("packer").startup(function()
   use "nvim-lua/plenary.nvim"
   use "nvim-telescope/telescope.nvim"
 
-  use "jacoborus/tender.vim"
+  use "folke/tokyonight.nvim"
 
   use "https://git.sr.ht/~sircmpwn/hare.vim"
 
@@ -56,7 +56,7 @@ require("packer").startup(function()
   use "leafOfTree/vim-vue-plugin"
 end)
 
-vim.cmd("color tender")
+vim.cmd("color tokyonight-moon")
 
 vim.cmd("autocmd! BufRead,BufNewFile *.qtpl set filetype=html")
 
