@@ -117,9 +117,14 @@ require"lspconfig".perlpls.setup{
   on_attach = on_attach,
 }
 
-require'lspconfig'.vuels.setup{
+require"lspconfig".ccls.setup{
   on_attach = on_attach,
 }
+
+require'lspconfig'.volar.setup{
+  on_attach = on_attach,
+  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+ }
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.go" },
