@@ -60,6 +60,9 @@ vim.cmd("color tokyonight-moon")
 
 vim.cmd("autocmd! BufRead,BufNewFile *.qtpl set filetype=html")
 
+vim.g.gh_gitlab_domain = "git.0x484c.com"
+vim.g.gh_open_command = 'fn() { echo "$@" | xclip -selection clipboard; }; fn '
+
 local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "<leader>t", ":NERDTreeToggle<CR>", opts)
 vim.keymap.set("n", "<leader>f", ":NERDTreeFind<CR>", opts)
