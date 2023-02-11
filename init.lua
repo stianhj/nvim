@@ -78,6 +78,7 @@ vim.keymap.set("n", "<space>gl", ":silent! Git log<CR>:bot copen<CR>", opts)
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<space>pf", builtin.find_files, {})
 vim.keymap.set("n", "<space>pb", builtin.buffers, {})
+vim.keymap.set('n', '<space>/', builtin.live_grep, {})
 
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
