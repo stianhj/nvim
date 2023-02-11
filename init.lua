@@ -117,8 +117,14 @@ require"lspconfig".gopls.setup{
   on_attach = on_attach,
 }
 
-require"lspconfig".perlpls.setup{
+require"lspconfig".perlnavigator.setup{
+  cmd = { "perlnavigator", "--stdio" },
   on_attach = on_attach,
+  settings = {
+    perlnavigator = {
+      perlPath = '/home/x/.local/bin/cperl',
+    }
+  }
 }
 
 require"lspconfig".ccls.setup{
