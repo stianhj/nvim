@@ -55,6 +55,7 @@ require("packer").startup(function()
   use "ruanyl/vim-gh-line"
 
   use "leafOfTree/vim-vue-plugin"
+  use "echasnovski/mini.nvim"
 end)
 
 vim.cmd("color carbonfox")
@@ -179,3 +180,6 @@ cmp.setup({
     ['<Tab>'] = cmp.mapping.confirm({ select = true }),
   }),
 })
+
+require"mini.bracketed".setup()
+require"mini.jump2d".setup()
