@@ -3,7 +3,7 @@ set hidden
 set vb t_vb=
 set guioptions=
 set fillchars=vert:\ ,fold:-
-set list listchars=tab:\ \ ,trail:·
+set list listchars=tab:\›\ ,trail:·,extends:>
 set ts=2 sts=2 sw=2 expandtab
 set incsearch
 set smartcase
@@ -50,6 +50,7 @@ require("packer").startup(function()
   use "EdenEast/nightfox.nvim"
 
   use "https://git.sr.ht/~sircmpwn/hare.vim"
+  use "vim-perl/vim-perl"
 
   use "ruanyl/vim-gh-line"
 
@@ -59,6 +60,7 @@ end)
 vim.cmd("color carbonfox")
 
 vim.cmd("autocmd! BufRead,BufNewFile *.qtpl set filetype=html")
+vim.cmd("autocmd FileType perl setlocal shiftwidth=2 softtabstop=2 noexpandtab")
 
 vim.g.gh_gitlab_domain = "git.0x484c.com"
 vim.g.gh_open_command = 'fn() { echo "$@" | xclip -selection clipboard; }; fn '
