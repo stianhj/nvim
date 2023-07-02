@@ -68,6 +68,8 @@ vim.cmd("color carbonfox")
 
 vim.cmd("autocmd! BufRead,BufNewFile *.qtpl set filetype=html")
 vim.cmd("autocmd FileType perl setlocal shiftwidth=2 softtabstop=2 noexpandtab")
+vim.cmd("autocmd! BufRead,BufNewFile *.h set filetype=c")
+vim.cmd("autocmd Filetype c setlocal tabstop=8 textwidth=100 shiftwidth=8 noexpandtab cindent formatoptions=tcqlron cinoptions=:0,l1,t0,g0 cinkeys-=0#")
 vim.cmd("autocmd Filetype uxntal setlocal tabstop=4 textwidth=100 shiftwidth=4 noexpandtab")
 
 vim.cmd([[
