@@ -62,6 +62,8 @@ require("packer").startup(function()
   use "vimwiki/vimwiki"
 
   use "bellinitte/uxntal.vim"
+
+  use "maxbane/vim-asm_ca65"
 end)
 
 vim.cmd("color carbonfox")
@@ -155,6 +157,25 @@ require'lspconfig'.volar.setup{
   on_attach = on_attach,
   filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
  }
+
+require"lspconfig".lua_ls.setup{
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        enable = true,
+        globals = {'vim', 'describe', 'use'},
+        disable = {"lowercase-global"}
+      },
+      workspace = {
+        library = {
+          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+        },
+      },
+    },
+  }
+}
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.go" },
