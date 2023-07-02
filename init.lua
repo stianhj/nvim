@@ -54,14 +54,28 @@ require("packer").startup(function()
 
   use "ruanyl/vim-gh-line"
 
+  use "tikhomirov/vim-glsl"
+
   use "leafOfTree/vim-vue-plugin"
   use "echasnovski/mini.nvim"
+
+  use "vimwiki/vimwiki"
+
+  use "bellinitte/uxntal.vim"
 end)
 
 vim.cmd("color carbonfox")
 
 vim.cmd("autocmd! BufRead,BufNewFile *.qtpl set filetype=html")
 vim.cmd("autocmd FileType perl setlocal shiftwidth=2 softtabstop=2 noexpandtab")
+vim.cmd("autocmd Filetype uxntal setlocal tabstop=4 textwidth=100 shiftwidth=4 noexpandtab")
+
+vim.cmd([[
+let g:vimwiki_list = [{'path': '~/sync/unvimwiki', 'syntax': 'markdown', 'ext': '.md'}]")
+let g:vimwiki_folding = 'expr'
+set foldlevelstart=1
+]])
+ 
 
 vim.g.gh_gitlab_domain = "git.0x484c.com"
 vim.g.gh_open_command = 'fn() { echo "$@" | xclip -selection clipboard; }; fn '
