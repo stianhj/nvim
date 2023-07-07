@@ -64,6 +64,8 @@ require("packer").startup(function()
   use "bellinitte/uxntal.vim"
 
   use "maxbane/vim-asm_ca65"
+
+  use "sbdchd/neoformat"
 end)
 
 vim.cmd("color carbonfox")
@@ -95,6 +97,8 @@ vim.keymap.set("n", "<space>ge", ":Gedit<CR>", opts)
 vim.keymap.set("n", "<space>gr", ":Gread<CR>", opts)
 vim.keymap.set("n", "<space>gw", ":Gwrite<CR><CR>", opts)
 vim.keymap.set("n", "<space>gl", ":silent! Git log<CR>:bot copen<CR>", opts)
+
+vim.keymap.set("n", "<space>mf", ":Neoformat<CR>", opts)
 
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<space>pf", builtin.find_files, {})
@@ -199,6 +203,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.go" },
   callback = function()
     vim.lsp.buf.format()
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.c", "*.h" },
+  callback = function()
+    vim.cmd("Neoformat")
   end,
 })
 
