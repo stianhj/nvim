@@ -78,9 +78,8 @@ vim.cmd("autocmd Filetype uxntal setlocal tabstop=4 textwidth=100 shiftwidth=4 n
 vim.cmd([[
 let g:vimwiki_list = [{'path': '~/sync/unvimwiki', 'syntax': 'markdown', 'ext': '.md'}]")
 let g:vimwiki_folding = 'expr'
-set foldlevelstart=1
+set foldlevelstart=99
 ]])
- 
 
 vim.g.gh_gitlab_domain = "git.0x484c.com"
 vim.g.gh_open_command = 'fn() { echo "$@" | xclip -selection clipboard; }; fn '
@@ -104,10 +103,9 @@ vim.keymap.set("n", "<space>pf", builtin.find_files, {})
 vim.keymap.set("n", "<space>pb", builtin.buffers, {})
 vim.keymap.set('n', '<space>/', builtin.live_grep, {})
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, bufopts)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
@@ -202,13 +200,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.go" },
   callback = function()
     vim.lsp.buf.format()
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.c", "*.h" },
-  callback = function()
-    vim.cmd("Neoformat")
   end,
 })
 
