@@ -57,7 +57,6 @@ require("packer").startup(function()
   use "tikhomirov/vim-glsl"
 
   use "leafOfTree/vim-vue-plugin"
-  use "echasnovski/mini.nvim"
 
   use "vimwiki/vimwiki"
 
@@ -244,6 +243,3 @@ cmp.setup({
     ['<Tab>'] = cmp.mapping.confirm({ select = true }),
   }),
 })
-
-require"mini.bracketed".setup()
-require"mini.jump2d".setup()
