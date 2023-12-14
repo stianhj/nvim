@@ -65,6 +65,8 @@ require("packer").startup(function()
   use "maxbane/vim-asm_ca65"
 
   use "sbdchd/neoformat"
+
+  use "joerdav/templ.vim"
 end)
 
 vim.cmd("color carbonfox")
