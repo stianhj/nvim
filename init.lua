@@ -104,6 +104,7 @@ local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<space>pf", builtin.find_files, {})
 vim.keymap.set("n", "<space>pb", builtin.buffers, {})
 vim.keymap.set('n', '<space>/', builtin.live_grep, {})
+vim.keymap.set("n", "<space>ps", builtin.lsp_document_symbols, {})
 
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
