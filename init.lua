@@ -181,6 +181,15 @@ require"lspconfig".lua_ls.setup{
   }
 }
 
+require'lspconfig'.templ.setup{}
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.templ" },
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})
+
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.go" },
   callback = function()
