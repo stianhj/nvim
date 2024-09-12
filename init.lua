@@ -126,6 +126,11 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+
+  vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
+  vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
+  vim.keymap.set("n", "<space>]", vim.diagnostic.goto_next)
+  vim.keymap.set("n", "<space>[", vim.diagnostic.goto_prev)
 end
 
 -- zig
