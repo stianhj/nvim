@@ -28,6 +28,32 @@ command! RemoveTrailingWhitespace :%s/\s\+$//
 vim.opt.inccommand = "nosplit"
 vim.opt.encoding = "utf-8"
 vim.g.mapleader = ","
+vim.g.maplocalleader = "\\"
+
+local rocks_config = {
+	rocks_path = vim.env.HOME .. "/.local/share/nvim/rocks",
+}
+
+vim.g.rocks_nvim = rocks_config
+
+local luarocks_path = {
+	vim.fs.joinpath(rocks_config.rocks_path, "share", "lua", "5.1", "?.lua"),
+	vim.fs.joinpath(rocks_config.rocks_path, "share", "lua", "5.1", "?", "init.lua"),
+}
+package.path = package.path .. ";" .. table.concat(luarocks_path, ";")
+
+local luarocks_cpath = {
+	vim.fs.joinpath(rocks_config.rocks_path, "lib", "lua", "5.1", "?.so"),
+	vim.fs.joinpath(rocks_config.rocks_path, "lib64", "lua", "5.1", "?.so"),
+	-- Remove the dylib and dll paths if you do not need macos or windows support
+	vim.fs.joinpath(rocks_config.rocks_path, "lib", "lua", "5.1", "?.dylib"),
+	vim.fs.joinpath(rocks_config.rocks_path, "lib64", "lua", "5.1", "?.dylib"),
+	vim.fs.joinpath(rocks_config.rocks_path, "lib", "lua", "5.1", "?.dll"),
+	vim.fs.joinpath(rocks_config.rocks_path, "lib64", "lua", "5.1", "?.dll"),
+}
+package.cpath = package.cpath .. ";" .. table.concat(luarocks_cpath, ";")
+
+vim.opt.runtimepath:append(vim.fs.joinpath(rocks_config.rocks_path, "lib", "luarocks", "rocks-5.1", "rocks.nvim", "*"))
 
 require("packer").startup(function()
   use "wbthomason/packer.nvim"
@@ -35,38 +61,37 @@ require("packer").startup(function()
   use "neovim/nvim-lspconfig"
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-buffer"
-  --use "hrsh7th/cmp-path"
-  --use "hrsh7th/cmp-cmdline"
   use "hrsh7th/nvim-cmp"
 
   use "scrooloose/nerdtree"
   use "scrooloose/nerdcommenter"
   use "tpope/vim-fugitive"
-  use "ziglang/zig.vim"
 
   use "nvim-lua/plenary.nvim"
   use "nvim-telescope/telescope.nvim"
-
-  use "EdenEast/nightfox.nvim"
-
-  use "https://git.sr.ht/~sircmpwn/hare.vim"
-  use "vim-perl/vim-perl"
+  use "nvim-treesitter/nvim-treesitter"
 
   use "ruanyl/vim-gh-line"
 
+  use "ziglang/zig.vim"
+  use "vim-perl/vim-perl"
   use "tikhomirov/vim-glsl"
-
   use "leafOfTree/vim-vue-plugin"
-
-  use "vimwiki/vimwiki"
-
-  use "bellinitte/uxntal.vim"
-
   use "maxbane/vim-asm_ca65"
+  use "joerdav/templ.vim"
 
+  use "MunifTanjim/prettier.nvim"
   use "sbdchd/neoformat"
 
-  use "joerdav/templ.vim"
+  --use "https://git.sr.ht/~sircmpwn/hare.vim"
+  --use "tidalcycles/vim-tidal"
+  --use "bellinitte/uxntal.vim"
+  --use "yko/mojo.vim"
+
+
+  use "EdenEast/nightfox.nvim"
+
+  use "vimwiki/vimwiki"
 end)
 
 vim.cmd("color carbonfox")
@@ -105,6 +130,9 @@ vim.keymap.set("n", "<space>pf", builtin.find_files, {})
 vim.keymap.set("n", "<space>pb", builtin.buffers, {})
 vim.keymap.set('n', '<space>/', builtin.live_grep, {})
 vim.keymap.set("n", "<space>ps", builtin.lsp_document_symbols, {})
+vim.keymap.set("n", "<space>pg", function()
+  builtin.grep_string({ search = vim.fn.input("Grep > ") });
+end)
 
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -133,13 +161,34 @@ local on_attach = function(_, bufnr)
   vim.keymap.set("n", "<space>[", vim.diagnostic.goto_prev)
 end
 
+-- treesitter
+require"nvim-treesitter.configs".setup{
+  highlight = {
+    enable = true,
+  },
+}
+
+require"neorg".setup{
+  load = {
+    ["core.defaults"] = {},
+    ["core.concealer"] = {},
+    ["core.dirman"] = {
+      config = {
+        workspaces = {
+          notes = "~/sync/notes",
+        },
+      },
+    },
+  },
+}
+
 -- zig
 require"lspconfig".zls.setup{
   on_attach = on_attach,
 }
 
 -- typescript
-require"lspconfig".tsserver.setup{
+require"lspconfig".ts_ls.setup{
   on_attach = on_attach,
 }
 
@@ -218,6 +267,25 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
     vim.lsp.buf.format()
   end,
+})
+
+local prettier = require("prettier")
+
+prettier.setup({
+  bin = 'prettier',
+  filetypes = {
+    "css",
+    "graphql",
+    "html",
+    "javascript",
+    "json",
+    "less",
+    "markdown",
+    "scss",
+    "typescript",
+    "typescriptreact",
+    "yaml",
+  },
 })
 
 -- completion
