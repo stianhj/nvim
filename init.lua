@@ -21,12 +21,14 @@ set autowrite
 set notermguicolors
 set t_Co=256
 set signcolumn=yes
+set bg=dark
 
 command! RemoveTrailingWhitespace :%s/\s\+$//
 ]])
 
 vim.opt.inccommand = "nosplit"
 vim.opt.encoding = "utf-8"
+vim.opt.diffopt = "internal,filler,closeoff"
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 
@@ -73,6 +75,8 @@ require("packer").startup(function()
 
   use "ruanyl/vim-gh-line"
 
+  use "norcalli/nvim-colorizer.lua"
+
   use "ziglang/zig.vim"
   use "vim-perl/vim-perl"
   use "tikhomirov/vim-glsl"
@@ -83,18 +87,17 @@ require("packer").startup(function()
   use "MunifTanjim/prettier.nvim"
   use "sbdchd/neoformat"
 
-  --use "https://git.sr.ht/~sircmpwn/hare.vim"
-  --use "tidalcycles/vim-tidal"
-  --use "bellinitte/uxntal.vim"
-  --use "yko/mojo.vim"
-
-
   use "EdenEast/nightfox.nvim"
+  use "ntk148v/komau.vim"
 
   use "vimwiki/vimwiki"
 end)
 
-vim.cmd("color carbonfox")
+vim.opt.termguicolors = true
+require"colorizer".setup()
+
+--vim.cmd("color carbonfox")
+vim.cmd("color komau")
 
 vim.cmd("autocmd! BufRead,BufNewFile *.qtpl set filetype=html")
 vim.cmd("autocmd FileType perl setlocal shiftwidth=2 softtabstop=2 noexpandtab")
