@@ -18,6 +18,12 @@ return {
       builtin.find_files(opts)
     end)
 
+    vim.keymap.set("n", "<space>of", function()
+      builtin.find_files({
+        cwd = "/usr/lib/odin",
+      })
+    end)
+
     require "plugins.telescope.multigrep".setup()
   end
 }
