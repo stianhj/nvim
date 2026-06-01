@@ -52,3 +52,9 @@ vim.opt.inccommand = "nosplit"
 vim.opt.encoding = "utf-8"
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
+
+vim.cmd("autocmd FileType odin setlocal shiftwidth=4 tabstop=4 noexpandtab")
+vim.cmd("autocmd FileType odin map <F5> :!make<CR>")
+vim.cmd("autocmd FileType odin map <F6> :!odin check . -vet -strict-style<CR>")
+vim.cmd("autocmd FileType odin map <F7> :!odin run % -file<CR>")
+vim.cmd("autocmd FileType odin map <F8> :!odin check % -file -vet -strict-style<CR>")
