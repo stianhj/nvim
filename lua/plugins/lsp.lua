@@ -10,12 +10,20 @@ return {
             { path = "${3rd}/luv/library", words = { "vim%.uv" } },
           },
         },
+      },
+      {
+        "SmiteshP/nvim-navic",
       }
     },
     config = function()
-      require "lspconfig".gopls.setup {}
-      require "lspconfig".lua_ls.setup {}
-      require "lspconfig".templ.setup {}
+      vim.lsp.enable("ccls")
+      vim.lsp.enable("gopls")
+      vim.lsp.enable("lua_ls")
+      vim.lsp.enable("templ")
+      vim.lsp.enable("zls")
+      vim.lsp.enable("rust_analyzer")
+
+      vim.keymap.set("n", "<leader>e", vim.diagnostic.setqflist, {})
 
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = { "*.go" },
@@ -38,15 +46,19 @@ return {
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if not client then return end
 
-          if client.supports_method(client, 'textDocument/formatting') then
+          if client.server_capabilities.documentSymbolProvider then
+            require("nvim-navic").attach(client, args.buf)
+          end
+
+          if client:supports_method('textDocument/formatting') then
             vim.api.nvim_create_autocmd('BufWritePre', {
               buffer = args.buf,
               callback = function()
                 vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-              end
+              end,
             })
           end
-        end
+        end,
       })
     end,
   }
