@@ -1,7 +1,11 @@
 return {
   {
     "EdenEast/nightfox.nvim",
+    lazy = false,
+    priority = 1000,
     config = function()
+      vim.cmd.colorscheme "carbonfox"
+      vim.opt_local.fillchars = { vert = "│", horiz = "─" }
     end,
   },
   {
@@ -11,11 +15,9 @@ return {
   },
   {
     "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
     opts = {},
-    config = function()
-      vim.cmd.colorscheme "tokyonight"
-    end,
+    -- config = function()
+    --   vim.cmd.colorscheme "tokyonight"
+    -- end,
   }
 }
