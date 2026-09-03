@@ -25,6 +25,33 @@ return {
 
       vim.keymap.set("n", "<leader>e", vim.diagnostic.setqflist, {})
 
+      vim.keymap.set("n", "<space>fs", function()
+        vim.lsp.buf.document_symbol({
+          on_list = function(options)
+            local items = vim.tbl_filter(function(item)
+              return item.kind == "Function" or item.kind == "Method"
+            end, options.items)
+            vim.fn.setqflist({}, " ", {
+              title = "Functions & Methods",
+              items = items,
+            })
+            vim.cmd("copen")
+          end,
+        })
+      end)
+
+      vim.keymap.set("n", "<space>ff", function()
+        vim.lsp.buf.document_symbol({
+          on_list = function(options)
+            vim.fn.setqflist({}, " ", {
+              title = "Document Symbols",
+              items = options.items,
+            })
+            vim.cmd("copen")
+          end,
+        })
+      end)
+
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = { "*.go" },
         callback = function()
