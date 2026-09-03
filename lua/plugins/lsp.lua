@@ -29,10 +29,31 @@ return {
         vim.lsp.buf.document_symbol({
           on_list = function(options)
             local items = vim.tbl_filter(function(item)
-              return item.kind == "Function" or item.kind == "Method"
+              return item.kind == "Function"
+                  or item.kind == "Method"
+                  or item.kind == "Variable"
+                  or item.kind == "Constant"
+                  or item.kind == "Field"
+                  or item.kind == "Property"
+                  or item.kind == "Struct"
+                  or item.kind == "Union"
+                  or item.kind == "Enum"
             end, options.items)
+
+            local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+            for i, line in ipairs(lines) do
+              local name = line:match("^#define[[:space:]]+([A-Za-z_][A-Za-z0-9_]*)")
+              if name then
+                table.insert(items, {
+                  text = name,
+                  lnum = i,
+                  col = 9, -- column after "#define "
+                })
+              end
+            end
+
             vim.fn.setqflist({}, " ", {
-              title = "Functions & Methods",
+              title = "Functions & Variables",
               items = items,
             })
             vim.cmd("copen")
