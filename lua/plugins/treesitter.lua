@@ -5,13 +5,28 @@ return {
   lazy = false,    -- Ensure parsers are available before buffers load
   config = function()
     local ts = require("nvim-treesitter")
+    local parsers = require("nvim-treesitter.parsers")
+
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "TSUpdate",
+      callback = function()
+        parsers.janet_simple = {
+          install_info = {
+            url = "https://github.com/sogaiu/tree-sitter-janet-simple",
+            revision = nil,
+            branch = "master",
+            queries = "queries",
+          },
+        }
+      end,
+    })
+
+    vim.treesitter.language.register("janet_simple", { "janet" })
 
     -- 1. Install parsers (replaces 'ensure_installed')
-    -- We install them immediately or on-demand.
-    -- For 'auto_install' behavior, see the autocmd below.
     ts.install({
       "c", "lua", "odin", "vim", "vimdoc", "query",
-      "markdown", "markdown_inline", "rust",
+      "markdown", "markdown_inline", "rust", "janet_simple",
     })
 
     -- 2. Recreate your custom logic via Autocmds

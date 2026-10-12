@@ -51,7 +51,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.opt.inccommand = "nosplit"
 vim.opt.encoding = "utf-8"
 vim.g.mapleader = ","
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = ","
 
 vim.cmd("autocmd FileType odin setlocal shiftwidth=4 tabstop=4 noexpandtab")
 vim.cmd("autocmd FileType odin map <F5> :!make<CR>")
